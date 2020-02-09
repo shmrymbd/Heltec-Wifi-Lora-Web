@@ -44,7 +44,7 @@ void setup() {
   listAllFiles();
  
   SPIFFS.remove("/test.txt");
-   SPIFFS.remove("/README");
+  SPIFFS.remove("/README.txt");
  
   Serial.println("\n\n---AFTER REMOVING---");
   listAllFiles();
