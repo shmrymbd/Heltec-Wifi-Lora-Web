@@ -13,7 +13,7 @@ const char* ssid = "loranet3";
 const char* password = "1qaz2wsx";
 
 // Set LED GPIO
-const int ledPin = 2;
+// const int ledPin = 2;
 // Stores LED state
 String ledState;
 
@@ -24,7 +24,7 @@ AsyncWebServer server(80);
 String processor(const String& var){
   Serial.println(var);
   if(var == "STATE"){
-    if(digitalRead(ledPin)){
+    if(digitalRead(LED_BUILTIN)){
       ledState = "ON";
     }
     else{
@@ -39,7 +39,7 @@ String processor(const String& var){
 void setup(){
   // Serial port for debugging purposes
   Serial.begin(115200);
-  pinMode(ledPin, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
 
   // Initialize SPIFFS
   if(!SPIFFS.begin(true)){
@@ -69,13 +69,13 @@ void setup(){
 
   // Route to set GPIO to HIGH
   server.on("/on", HTTP_GET, [](AsyncWebServerRequest *request){
-    digitalWrite(ledPin, HIGH);    
+    digitalWrite(LED_BUILTIN, HIGH);    
     request->send(SPIFFS, "/index.html", String(), false, processor);
   });
   
   // Route to set GPIO to LOW
   server.on("/off", HTTP_GET, [](AsyncWebServerRequest *request){
-    digitalWrite(ledPin, LOW);    
+    digitalWrite(LED_BUILTIN, LOW);    
     request->send(SPIFFS, "/index.html", String(), false, processor);
   });
 
@@ -83,6 +83,4 @@ void setup(){
   server.begin();
 }
  
-void loop(){
-  
-}
+void loop(){}
